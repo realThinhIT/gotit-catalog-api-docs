@@ -69,7 +69,7 @@
           application/json:
             schema:
               allOf:
-                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - $ref: './schemas.yaml#/ApiBadRequestValidationResponse'
                 - properties:
                     errors:
                       type: object
@@ -213,6 +213,10 @@
 
       404:
         description: Category with the given ID does not exist.
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/ApiNotFoundResponse'
 
       500:
         description: Server error.
@@ -371,7 +375,7 @@
           application/json:
             schema:
               allOf:
-                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - $ref: './schemas.yaml#/ApiBadRequestValidationResponse'
                 - properties:
                     errors:
                       type: object
@@ -389,6 +393,10 @@
 
       401: 
         description: Unauthorized. Please login in advance in order to create new resource.
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/ApiUnauthorizedResponse'
 
       500:
         description: Server error.
@@ -421,6 +429,10 @@
 
       404:
         description: Item with the given ID does not exist.
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/ApiNotFoundResponse'
 
       500:
         description: Server error.
@@ -457,6 +469,10 @@
 
       404:
         description: Item with the given ID does not exist.
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/ApiNotFoundResponse'
 
       400:
         description: Bad request. Duplicated item name or invalid input.
@@ -464,7 +480,7 @@
           application/json:
             schema:
               allOf:
-                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - $ref: './schemas.yaml#/ApiBadRequestValidationResponse'
                 - properties:
                     errors:
                       type: object
@@ -477,6 +493,10 @@
 
       401:
         description: Unauthorized. The resource can only be updated by its creator.
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/ApiUnauthorizedResponse'
 
       500:
         description: Server error.
@@ -496,9 +516,17 @@
 
       401:
         description: Unauthorized. The resource can only be deleted by its creator.
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/ApiUnauthorizedResponse'
 
       404:
         description: The resource is not available for removal.
+        content:
+          application/json:
+            schema:
+              $ref: './schemas.yaml#/ApiNotFoundResponse'
 
       500:
         description: Server error.

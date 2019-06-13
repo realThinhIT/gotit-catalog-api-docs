@@ -168,11 +168,52 @@ ApiErrorResponse:
     status: 
       type: integer
       default: 0
+    error_code:
+      type: integer
+      default: 40000
     message:
       type: string
       default: The server encountered some issues while processing your request.
     errors:
       type: object
+
+ApiNotFoundResponse:
+  type: object
+  allOf:
+    - $ref: './schemas.yaml#/ApiErrorResponse'
+    - properties:
+        error_code:
+          example: 40400
+        message:
+          example: The resource requested doesn't exist.
+
+ApiBadRequestValidationResponse:
+  type: object
+  allOf:
+    - $ref: './schemas.yaml#/ApiErrorResponse'
+    - properties:
+        error_code:
+          enum: [
+            40000,
+            40001,
+            40002
+          ]
+        message:
+          enum: [
+            'Bad request, please try again.',
+            'Some inputs are invalid, please correct and try again.',
+            'The resource you trying to modify already exists.'
+          ]
+
+ApiUnauthorizedResponse:
+  type: object
+  allOf:
+    - $ref: './schemas.yaml#/ApiErrorResponse'
+    - properties:
+        error_code:
+          example: 40100
+        message:
+          example: Please authenticate first before performing this action.
 
 ApiResponsePagination:
   type: object
