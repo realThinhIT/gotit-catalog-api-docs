@@ -60,6 +60,7 @@
                 - properties:
                     data:
                       allOf:
+                        - $ref: './schemas.yaml#/BaseId'
                         - $ref: './schemas.yaml#/RegisterUserRes'
                         
       400:
@@ -126,63 +127,63 @@
       500:
         description: Server error.
 
-  post:
-    security:
-      - apiKeyAuth: []
-        jwtBearerAuth: []
-    summary: Create New Category
-    description: Create a new category in the database.
-    tags:
-      - Categories
+  # post:
+  #   security:
+  #     - apiKeyAuth: []
+  #       jwtBearerAuth: []
+  #   summary: Create New Category
+  #   description: Create a new category in the database.
+  #   tags:
+  #     - Categories
 
-    requestBody:
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: './schemas.yaml#/Category'
+  #   requestBody:
+  #     content:
+  #       application/json:
+  #         schema:
+  #           allOf:
+  #             - $ref: './schemas.yaml#/Category'
 
-    responses:
-      201: 
-        description: Created new category successfully.
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: './schemas.yaml#/ApiResponse'
-                - properties:
-                    data:
-                      allOf:
-                        - $ref: './schemas.yaml#/BaseId'
-                        - $ref: './schemas.yaml#/Category'
+  #   responses:
+  #     201: 
+  #       description: Created new category successfully.
+  #       content:
+  #         application/json:
+  #           schema:
+  #             allOf:
+  #               - $ref: './schemas.yaml#/ApiResponse'
+  #               - properties:
+  #                   data:
+  #                     allOf:
+  #                       - $ref: './schemas.yaml#/BaseId'
+  #                       - $ref: './schemas.yaml#/Category'
 
-      400:
-        description: Bad request. Missing fields or duplicated category.
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: './schemas.yaml#/ApiErrorResponse'
-                - properties:
-                    errors:
-                      type: object
-                      properties:
-                        name:
-                          type: array
-                          example: [
-                            'Category name is duplicated!'
-                          ]
-                        description:
-                          type: array
-                          example: [
-                            'Description is required.'
-                          ]
+  #     400:
+  #       description: Bad request. Missing fields or duplicated category.
+  #       content:
+  #         application/json:
+  #           schema:
+  #             allOf:
+  #               - $ref: './schemas.yaml#/ApiErrorResponse'
+  #               - properties:
+  #                   errors:
+  #                     type: object
+  #                     properties:
+  #                       name:
+  #                         type: array
+  #                         example: [
+  #                           'Category name is duplicated!'
+  #                         ]
+  #                       description:
+  #                         type: array
+  #                         example: [
+  #                           'Description is required.'
+  #                         ]
 
-      401: 
-        description: Unauthorized. Please login in advance in order to create new resource.
+  #     401: 
+  #       description: Unauthorized. Please login in advance in order to create new resource.
 
-      500:
-        description: Server error.
+  #     500:
+  #       description: Server error.
 
 
 
@@ -206,11 +207,9 @@
                 - $ref: './schemas.yaml#/ApiResponse'
                 - properties:
                     data:
-                      type: array
-                      items:
-                        allOf:
-                          - $ref: './schemas.yaml#/BaseId'
-                          - $ref: './schemas.yaml#/Category'
+                      allOf:
+                        - $ref: './schemas.yaml#/BaseId'
+                        - $ref: './schemas.yaml#/Category'
 
       404:
         description: Category with the given ID does not exist.
@@ -218,85 +217,85 @@
       500:
         description: Server error.
 
-  put:
-    security:
-      - apiKeyAuth: []
-        jwtBearerAuth: []
-    summary: Update Category Information
-    description: Update category information with the corresponding Category ID.
-    tags:
-      - Categories
+  # put:
+  #   security:
+  #     - apiKeyAuth: []
+  #       jwtBearerAuth: []
+  #   summary: Update Category Information
+  #   description: Update category information with the corresponding Category ID.
+  #   tags:
+  #     - Categories
 
-    requestBody:
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: './schemas.yaml#/CategoryReq'
+  #   requestBody:
+  #     content:
+  #       application/json:
+  #         schema:
+  #           allOf:
+  #             - $ref: './schemas.yaml#/CategoryReq'
 
-    responses:
-      200: 
-        description: Updated category information successfully.
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: './schemas.yaml#/ApiResponse'
-                - properties:
-                    data:
-                      type: array
-                      items:
-                        allOf:
-                          - $ref: './schemas.yaml#/BaseId'
-                          - $ref: './schemas.yaml#/Category'
+  #   responses:
+  #     200: 
+  #       description: Updated category information successfully.
+  #       content:
+  #         application/json:
+  #           schema:
+  #             allOf:
+  #               - $ref: './schemas.yaml#/ApiResponse'
+  #               - properties:
+  #                   data:
+  #                     type: array
+  #                     items:
+  #                       allOf:
+  #                         - $ref: './schemas.yaml#/BaseId'
+  #                         - $ref: './schemas.yaml#/Category'
 
-      404:
-        description: Category with the given ID does not exist.
+  #     404:
+  #       description: Category with the given ID does not exist.
 
-      400:
-        description: Bad request. Duplicated category name or invalid input.
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: './schemas.yaml#/ApiErrorResponse'
-                - properties:
-                    errors:
-                      type: object
-                      properties:
-                        name:
-                          type: array
-                          example: [
-                            'New category name cannot be duplicated!'
-                          ]
+  #     400:
+  #       description: Bad request. Duplicated category name or invalid input.
+  #       content:
+  #         application/json:
+  #           schema:
+  #             allOf:
+  #               - $ref: './schemas.yaml#/ApiErrorResponse'
+  #               - properties:
+  #                   errors:
+  #                     type: object
+  #                     properties:
+  #                       name:
+  #                         type: array
+  #                         example: [
+  #                           'New category name cannot be duplicated!'
+  #                         ]
 
-      401:
-        description: Unauthorized. The resource can only be updated by its creator.
+  #     401:
+  #       description: Unauthorized. The resource can only be updated by its creator.
 
-      500:
-        description: Server error.
+  #     500:
+  #       description: Server error.
 
-  delete:
-    security:
-      - apiKeyAuth: []
-        jwtBearerAuth: []
-    summary: Delete Category
-    description: Delete the category with the corresponding Category ID.
-    tags:
-      - Categories
+  # delete:
+  #   security:
+  #     - apiKeyAuth: []
+  #       jwtBearerAuth: []
+  #   summary: Delete Category
+  #   description: Delete the category with the corresponding Category ID.
+  #   tags:
+  #     - Categories
     
-    responses:
-      200:
-        description: Deleted category successfully.
+  #   responses:
+  #     200:
+  #       description: Deleted category successfully.
 
-      401:
-        description: Unauthorized. The resource can only be deleted by its creator.
+  #     401:
+  #       description: Unauthorized. The resource can only be deleted by its creator.
 
-      404:
-        description: The resource is not available for removal.
+  #     404:
+  #       description: The resource is not available for removal.
 
-      500:
-        description: Server error.
+  #     500:
+  #       description: Server error.
 
 
 
@@ -416,11 +415,9 @@
                 - $ref: './schemas.yaml#/ApiResponse'
                 - properties:
                     data:
-                      type: array
-                      items:
-                        allOf:
-                          - $ref: './schemas.yaml#/BaseId'
-                          - $ref: './schemas.yaml#/Item'
+                      allOf:
+                        - $ref: './schemas.yaml#/BaseId'
+                        - $ref: './schemas.yaml#/Item'
 
       404:
         description: Item with the given ID does not exist.
@@ -454,11 +451,9 @@
                 - $ref: './schemas.yaml#/ApiResponse'
                 - properties:
                     data:
-                      type: array
-                      items:
-                        allOf:
-                          - $ref: './schemas.yaml#/BaseId'
-                          - $ref: './schemas.yaml#/Item'
+                      allOf:
+                        - $ref: './schemas.yaml#/BaseId'
+                        - $ref: './schemas.yaml#/Item'
 
       404:
         description: Item with the given ID does not exist.
