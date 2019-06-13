@@ -1,5 +1,9 @@
+# AUTHENTICATION
 LoginUserReq:
   type: object
+  required:
+    - username
+    - password
   properties:
     username:
       type: string
@@ -7,6 +11,43 @@ LoginUserReq:
     password:
       type: string
       example: 12345678
+
+RegisterUserReq:
+  type: object
+  required:
+    - username
+    - password
+    - email
+    - name
+  properties:
+    username:
+      type: string
+      example: thinhnd
+    password:
+      type: string
+      example: 12345678
+    email:
+      type: string
+      example: thinhnd.ict@gmail.com
+    name:
+      type: string
+      example: Thinh Nguyen
+
+RegisterUserRes:
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 1
+    username:
+      type: string
+      example: thinhnd
+    email:
+      type: string
+      example: thinhnd.ict@gmail.com
+    name:
+      type: string
+      example: Thinh Nguyen
 
 JWTResponse:
   type: object
@@ -28,6 +69,76 @@ JWTErrorResponse:
       type: integer
       example: 401
 
+
+
+
+# CATEGORIES
+Category:
+  type: object
+  required:
+    - name
+    - description
+  properties:
+    name:
+      type: string
+      example: Example Category
+    description:
+      type: string
+      example: This is an example category for the catalog app
+
+CategoryReq:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Example Category
+    description:
+      type: string
+      example: This is an example category for the catalog app
+
+
+# ITEMS
+Item:
+  type: object
+  required:
+    - name
+    - description
+    - price
+  properties:
+    name:
+      type: string
+      example: Example Category
+    description:
+      type: string
+      example: This is an example category for the catalog app
+    price:
+      type: number 
+      format: float
+      example: 10.99
+
+ItemReq:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Example Category
+    description:
+      type: string
+      example: This is an example category for the catalog app
+    price:
+      type: number 
+      format: float
+      example: 10.99
+
+
+# BASE RESPONSES
+BaseId:
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 1
+
 ApiResponse:
   type: object
   properties: 
@@ -37,13 +148,14 @@ ApiResponse:
       default: 1
     message:
       type: string
+      default: Action performed successfully!
     data:
       schema:
         type:
           oneOf:
             - object
             - array
-    additionalData:
+    additional_data:
       type: object
       
 ApiErrorResponse:
@@ -54,12 +166,14 @@ ApiErrorResponse:
       default: 0
     message:
       type: string
-      default: Sample error message.
+      default: The server encountered some issues while processing your request.
+    errors:
+      type: object
 
 ApiResponsePagination:
   type: object
   properties:
-    skip:
+    offset:
       type: integer
       default: 0
       example: 0
@@ -67,7 +181,7 @@ ApiResponsePagination:
       type: integer
       default: 100
       example: 100
-    totalItems:
+    items_count:
       type: integer
       description: Amount of items in the collection.
-      example: 50
+      example: 1

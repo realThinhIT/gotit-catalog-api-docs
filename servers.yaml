@@ -1,4 +1,4 @@
-- url: '{protocol}://api.hithinh.com/{version}'
+- url: '{protocol}://catalog-api.hithinh.com/{version}'
   description: Base URL (Dev Server) for App.
   variables:
     version:

@@ -1,2 +1,8 @@
-- name: Authentication
-  description: Authentication for applications
+- name: User Authentication
+  description: JWT authentication for web application.
+
+- name: Categories
+  description: Categories-related APIs.
+
+- name: Category Items
+  description: Items-related APIs.

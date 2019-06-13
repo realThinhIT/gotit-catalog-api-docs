@@ -1,3 +1,4 @@
+# AUTHENTICATION
 /auth:
   post:
     security:
@@ -5,7 +6,7 @@
     summary: Login and Retrieve Access Token
     description: Login into the system and retrieve a valid access token in order to authenticate other requests.
     tags: 
-      - Authentication
+      - User Authentication
     requestBody:
       content:
         application/json:
@@ -29,6 +30,480 @@
             schema:
               allOf:
                 - $ref: './schemas.yaml#/JWTErrorResponse'
+
+      500:
+        description: Server error.
+
+/users:
+  post:
+    security:
+      - apiKeyAuth: []
+    summary: Register New Account
+    description: Register a new account.
+    tags: 
+      - User Authentication
+    requestBody:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: './schemas.yaml#/RegisterUserReq'
+                      
+    responses:
+      201: 
+        description: Registered successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      allOf:
+                        - $ref: './schemas.yaml#/RegisterUserRes'
+                        
+      400:
+        description: Bad request. Missing fields or duplicated users.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - properties:
+                    errors:
+                      type: object
+                      properties:
+                        username:
+                          type: array
+                          example: [
+                            'Username is duplicated!'
+                          ]
+                        password:
+                          type: array
+                          example: [
+                            'Password must be at least 6 characters!'
+                          ]
+
+      500:
+        description: Server error.
+
+
+
+
+
+
+
+
+
+# CATEGORIES
+/categories:
+  get:
+    security:
+      - apiKeyAuth: []
+    summary: Retrieve List of Existing Categories
+    description: Fetch all existing categories in the database.
+    tags:
+      - Categories
+
+    responses:
+      200: 
+        description: Retrieved categories successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: './schemas.yaml#/BaseId'
+                          - $ref: './schemas.yaml#/Category'
+                    additional_data:
+                      $ref: './schemas.yaml#/ApiResponsePagination'
+
+      500:
+        description: Server error.
+
+  post:
+    security:
+      - apiKeyAuth: []
+        jwtBearerAuth: []
+    summary: Create New Category
+    description: Create a new category in the database.
+    tags:
+      - Categories
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: './schemas.yaml#/Category'
+
+    responses:
+      201: 
+        description: Created new category successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      allOf:
+                        - $ref: './schemas.yaml#/BaseId'
+                        - $ref: './schemas.yaml#/Category'
+
+      400:
+        description: Bad request. Missing fields or duplicated category.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - properties:
+                    errors:
+                      type: object
+                      properties:
+                        name:
+                          type: array
+                          example: [
+                            'Category name is duplicated!'
+                          ]
+                        description:
+                          type: array
+                          example: [
+                            'Description is required.'
+                          ]
+
+      401: 
+        description: Unauthorized. Please login in advance in order to create new resource.
+
+      500:
+        description: Server error.
+
+
+
+
+/categories/{categoryId}:
+  get:
+    security:
+      - apiKeyAuth: []
+    summary: Retrieve a Category Information
+    description: Fetch category information with the corresponding Category ID from the database.
+    tags:
+      - Categories
+
+    responses:
+      200: 
+        description: Retrieved category information successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: './schemas.yaml#/BaseId'
+                          - $ref: './schemas.yaml#/Category'
+
+      404:
+        description: Category with the given ID does not exist.
+
+      500:
+        description: Server error.
+
+  put:
+    security:
+      - apiKeyAuth: []
+        jwtBearerAuth: []
+    summary: Update Category Information
+    description: Update category information with the corresponding Category ID.
+    tags:
+      - Categories
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: './schemas.yaml#/CategoryReq'
+
+    responses:
+      200: 
+        description: Updated category information successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: './schemas.yaml#/BaseId'
+                          - $ref: './schemas.yaml#/Category'
+
+      404:
+        description: Category with the given ID does not exist.
+
+      400:
+        description: Bad request. Duplicated category name or invalid input.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - properties:
+                    errors:
+                      type: object
+                      properties:
+                        name:
+                          type: array
+                          example: [
+                            'New category name cannot be duplicated!'
+                          ]
+
+      401:
+        description: Unauthorized. The resource can only be updated by its creator.
+
+      500:
+        description: Server error.
+
+  delete:
+    security:
+      - apiKeyAuth: []
+        jwtBearerAuth: []
+    summary: Delete Category
+    description: Delete the category with the corresponding Category ID.
+    tags:
+      - Categories
+    
+    responses:
+      200:
+        description: Deleted category successfully.
+
+      401:
+        description: Unauthorized. The resource can only be deleted by its creator.
+
+      404:
+        description: The resource is not available for removal.
+
+      500:
+        description: Server error.
+
+
+
+
+
+
+
+
+# ITEMS
+/categories/{categoryId}/items:
+  get:
+    security:
+      - apiKeyAuth: []
+    summary: Retrieve List of Existing Items in a Category
+    description: Fetch all existing items of a specific category in the database.
+    tags:
+      - Category Items
+
+    responses:
+      200: 
+        description: Retrieved items successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: './schemas.yaml#/BaseId'
+                          - $ref: './schemas.yaml#/Item'
+                    additional_data:
+                      $ref: './schemas.yaml#/ApiResponsePagination'
+
+      500:
+        description: Server error.
+
+  post:
+    security:
+      - apiKeyAuth: []
+        jwtBearerAuth: []
+    summary: Create New Item in a Category
+    description: Create a new item in the database.
+    tags:
+      - Category Items
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: './schemas.yaml#/Item'
+
+    responses:
+      201: 
+        description: Created new category item successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      allOf:
+                        - $ref: './schemas.yaml#/BaseId'
+                        - $ref: './schemas.yaml#/Item'
+
+      400:
+        description: Bad request. Missing fields or duplicated item.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - properties:
+                    errors:
+                      type: object
+                      properties:
+                        name:
+                          type: array
+                          example: [
+                            'Item name is required.'
+                          ]
+                        description:
+                          type: array
+                          example: [
+                            'Description is required.'
+                          ]
+
+      401: 
+        description: Unauthorized. Please login in advance in order to create new resource.
+
+      500:
+        description: Server error.
+
+
+
+
+/categories/{categoryId}/items/{itemId}:
+  get:
+    security:
+      - apiKeyAuth: []
+    summary: Retrieve an Item Information
+    description: Fetch item information with the corresponding Item ID from the database.
+    tags:
+      - Category Items
+
+    responses:
+      200: 
+        description: Retrieved item information successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: './schemas.yaml#/BaseId'
+                          - $ref: './schemas.yaml#/Item'
+
+      404:
+        description: Item with the given ID does not exist.
+
+      500:
+        description: Server error.
+
+  put:
+    security:
+      - apiKeyAuth: []
+        jwtBearerAuth: []
+    summary: Update Item Information
+    description: Update item information with the corresponding Item ID.
+    tags:
+      - Category Items
+
+    requestBody:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: './schemas.yaml#/ItemReq'
+
+    responses:
+      200: 
+        description: Updated item information successfully.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiResponse'
+                - properties:
+                    data:
+                      type: array
+                      items:
+                        allOf:
+                          - $ref: './schemas.yaml#/BaseId'
+                          - $ref: './schemas.yaml#/Item'
+
+      404:
+        description: Item with the given ID does not exist.
+
+      400:
+        description: Bad request. Duplicated item name or invalid input.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: './schemas.yaml#/ApiErrorResponse'
+                - properties:
+                    errors:
+                      type: object
+                      properties:
+                        name:
+                          type: array
+                          example: [
+                            'New item name cannot be duplicated!'
+                          ]
+
+      401:
+        description: Unauthorized. The resource can only be updated by its creator.
+
+      500:
+        description: Server error.
+
+  delete:
+    security:
+      - apiKeyAuth: []
+        jwtBearerAuth: []
+    summary: Delete Category Item
+    description: Delete the item with the corresponding Item ID.
+    tags:
+      - Category Items
+    
+    responses:
+      200:
+        description: Deleted item successfully.
+
+      401:
+        description: Unauthorized. The resource can only be deleted by its creator.
+
+      404:
+        description: The resource is not available for removal.
 
       500:
         description: Server error.

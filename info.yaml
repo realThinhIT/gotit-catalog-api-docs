@@ -1,7 +1,9 @@
-title: API
+title: GOT IT CATALOG API
 version: 1.0.0
 description: |
-  This is a documentation for the API system that provides data for an app.
+  This is a documentation for the API system that provides data for Catalog Web App.
+
+  This is a part of the SE training program at Got It, Inc.
 
 contact:
   name: THINH, DUC NGUYEN
