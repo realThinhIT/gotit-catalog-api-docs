@@ -77,7 +77,6 @@ Category:
   type: object
   required:
     - name
-    - description
   properties:
     name:
       type: string
@@ -102,7 +101,6 @@ Item:
   type: object
   required:
     - name
-    - description
     - price
   properties:
     name:
