@@ -133,10 +133,10 @@ BaseId:
       example: 1
     created:
       type: string
-      example: 2015-08-05T08:40:51.620Z
+      example: 2019-06-17T06:57:34+00:00
     updated:
       type: string
-      example: 2015-08-05T08:40:51.620Z
+      example: 2019-06-17T06:57:34+00:00
 
 ApiResponse:
   type: object

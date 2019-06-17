@@ -163,6 +163,9 @@
     description: Fetch all existing items of a specific category in the database.
     tags:
       - Category Items
+    parameters:
+      - $ref: './parameters.yaml#/Page'
+      - $ref: './parameters.yaml#/ItemsPerPage'
 
     responses:
       200: 

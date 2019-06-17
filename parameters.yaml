@@ -1,14 +1,16 @@
 Page:
   in: query
   name: page
-  type: integer
-  description: 'Page # in the collection'
+  schema:
+    type: integer
+    description: 'Page # in the collection'
 
 ItemsPerPage:
   in: query
   name: per_page
-  type: integer
-  description: How many documents per page?
+  schema:
+    type: integer
+    description: How many documents per page?
     
 SearchQuery:
   in: query
