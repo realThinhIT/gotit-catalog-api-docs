@@ -101,7 +101,6 @@ Item:
   type: object
   required:
     - name
-    - price
   properties:
     name:
       type: string
@@ -109,10 +108,10 @@ Item:
     description:
       type: string
       example: This is an example category for the catalog app
-    price:
-      type: number 
-      format: float
-      example: 10.99
+    is_owner:
+      type: boolean
+      description: If authenticated, this field will help user to know if the resource is owned by them
+      example: false
 
 ItemReq:
   type: object
@@ -123,10 +122,6 @@ ItemReq:
     description:
       type: string
       example: This is an example category for the catalog app
-    price:
-      type: number 
-      format: float
-      example: 10.99
 
 
 # BASE RESPONSES
@@ -136,10 +131,10 @@ BaseId:
     id:
       type: integer
       example: 1
-    created_at:
+    created:
       type: string
       example: 2015-08-05T08:40:51.620Z
-    updated_at:
+    updated:
       type: string
       example: 2015-08-05T08:40:51.620Z
 
@@ -165,9 +160,6 @@ ApiResponse:
 ApiErrorResponse:
   type: object
   properties:
-    status: 
-      type: integer
-      default: 0
     error_code:
       type: integer
       default: 40000
@@ -218,15 +210,19 @@ ApiUnauthorizedResponse:
 ApiResponsePagination:
   type: object
   properties:
-    offset:
-      type: integer
-      default: 0
-      example: 0
-    limit:
-      type: integer
-      default: 100
-      example: 100
-    items_count:
+    total:
       type: integer
       description: Amount of items in the collection.
       example: 1
+    total_pages:
+      type: integer
+      description: Amount of pages in the collection.
+      example: 1
+    has_next:
+      type: boolean
+      description: Is next page is available?
+      example: false
+    per_page:
+      type: integer
+      description: Amount of items in a page
+      example: 50

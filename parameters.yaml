@@ -6,26 +6,9 @@ Page:
 
 ItemsPerPage:
   in: query
-  name: itemsPerPage
+  name: per_page
   type: integer
   description: How many documents per page?
-
-SortBy:
-  in: query
-  name: sortBy
-  type: string
-  description: By which fields to sort?
-
-Sort:
-  in: query
-  name: sort
-  description: Sort by which order?
-  schema:
-    type: string
-    enum: [
-        ASC,
-        DESC
-      ]
     
 SearchQuery:
   in: query

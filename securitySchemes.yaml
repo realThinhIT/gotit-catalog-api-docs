@@ -2,17 +2,3 @@ bearerAuth:
   type: http
   scheme: bearer
   bearerFormat: 'Authentication: Bearer <token>'
-
-jwtBearerAuth:
-  type: http
-  scheme: bearer
-  bearerFormat: 'Authentication: JWT <token>'
-  
-apiKeyAuth:
-  type: apiKey
-  in: header
-  name: X-Api-Key
-
-basicAuth:
-  type: http
-  scheme: basic
