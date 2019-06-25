@@ -10,7 +10,7 @@ LoginUserReq:
       example: thinhnd
     password:
       type: string
-      example: 12345678
+      example: "12345678"
 
 RegisterUserReq:
   type: object
@@ -25,7 +25,7 @@ RegisterUserReq:
       example: thinhnd
     password:
       type: string
-      example: 12345678
+      example: "12345678"
     email:
       type: string
       example: thinhnd.ict@gmail.com
@@ -134,9 +134,11 @@ BaseId:
     created:
       type: string
       example: 2019-06-17T06:57:34+00:00
+      default: 2019-06-17T06:57:34+00:00
     updated:
       type: string
       example: 2019-06-17T06:57:34+00:00
+      default: 2019-06-17T06:57:34+00:00
 
 ApiResponse:
   type: object
