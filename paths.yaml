@@ -35,7 +35,12 @@
           application/json:
             schema:
               allOf:
-                - $ref: './schemas.yaml#/JWTErrorResponse'
+                - $ref: './schemas.yaml#/ApiBadRequestValidationResponse'
+                - properties:
+                    error_code:
+                      example: 40100
+                    message:
+                      example: Invalid credentials. Username and/ or password is not correct. Please check and try again.
 
       500:
         description: Server error.
